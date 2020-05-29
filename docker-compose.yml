@@ -176,6 +176,7 @@ services:
           - CHANGE_SOURCE=${CHANGE_SOURCE}
           - LARADOCK_PHP_VERSION=${PHP_VERSION}
           - LARADOCK_PHALCON_VERSION=${PHALCON_VERSION}
+          - INSTALL_MAILHOG=${PHP_FPM_INSTALL_MAILHOG}
           - INSTALL_BZ2=${PHP_FPM_INSTALL_BZ2}
           - INSTALL_GMP=${PHP_FPM_INSTALL_GMP}
           - INSTALL_XDEBUG=${PHP_FPM_INSTALL_XDEBUG}
@@ -348,8 +349,14 @@ services:
       depends_on:
         - php-fpm
       networks:
-        - frontend
-        - backend
+        frontend:
+          aliases:
+            - soap.test
+            - magento.test
+        backend:
+          aliases:
+            - soap.test
+            - magento.test
 
 ### Blackfire ########################################
     blackfire:
@@ -807,10 +814,10 @@ services:
         - elasticsearch:/usr/share/elasticsearch/data
       environment:
         - cluster.name=laradock-cluster
-        - node.name=laradock-node
+        #- node.name=laradock-node
         - bootstrap.memory_lock=true
         - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-        - cluster.initial_master_nodes=laradock-node
+        #- cluster.initial_master_nodes=laradock-node
       ulimits:
         memlock:
           soft: -1
