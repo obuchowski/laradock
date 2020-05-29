@@ -202,8 +202,7 @@ RUN if [ ${INSTALL_XDEBUG} = true ]; then \
 # Copy xdebug configuration for remote debugging
 COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
-RUN sed -i "s/xdebug.remote_autostart=0/xdebug.remote_autostart=1/" /usr/local/etc/php/conf.d/xdebug.ini && \
-    sed -i "s/xdebug.remote_enable=0/xdebug.remote_enable=1/" /usr/local/etc/php/conf.d/xdebug.ini && \
+RUN sed -i "s/xdebug.remote_enable=0/xdebug.remote_enable=1/" /usr/local/etc/php/conf.d/xdebug.ini && \
     sed -i "s/xdebug.cli_color=0/xdebug.cli_color=1/" /usr/local/etc/php/conf.d/xdebug.ini
 
 ###########################################################################
@@ -897,6 +896,20 @@ RUN if [ ${INSTALL_CACHETOOL} = true ]; then \
     fi && \
     chmod +x cachetool.phar && \
     mv cachetool.phar /usr/local/bin/cachetool \
+;fi
+
+###########################################################################
+# Mailhog:
+###########################################################################
+
+ARG INSTALL_MAILHOG=false
+
+RUN if [ ${INSTALL_MAILHOG} = true ]; then \
+    apt-get install -y curl git \
+    && rm -rf /var/lib/apt/lists/* \
+    && curl -Lsf 'https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz' | tar -C '/usr/local' -xvzf - \
+    && /usr/local/go/bin/go get github.com/mailhog/mhsendmail \
+    && cp /root/go/bin/mhsendmail /usr/bin/mhsendmail \
 ;fi
 
 ###########################################################################
