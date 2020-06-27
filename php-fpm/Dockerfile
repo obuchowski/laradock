@@ -922,7 +922,8 @@ RUN if [ ${INSTALL_XMLRPC} = true ]; then \
 ARG INSTALL_MAILHOG=false
 
 RUN if [ ${INSTALL_MAILHOG} = true ]; then \
-    apt-get update -yqq && apt-get install -y curl git \
+    apt-get update -yqq && \
+    apt-get install -yqq curl git \
     && rm -rf /var/lib/apt/lists/* \
     && curl -Lsf 'https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz' | tar -C '/usr/local' -xvzf - \
     && /usr/local/go/bin/go get github.com/mailhog/mhsendmail \
