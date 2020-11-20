@@ -128,7 +128,7 @@ location /media/ {
 }
 
 location /media/customer/ {
-    deny all;
+    allow all;
 }
 
 location /media/downloadable/ {
