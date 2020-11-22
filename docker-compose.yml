@@ -351,11 +351,13 @@ services:
       networks:
         frontend:
           aliases:
-            - soap.test
+            - saas.test
+            - pildora.test
             - magento.test
         backend:
           aliases:
-            - soap.test
+            - saas.test
+            - pildora.test
             - magento.test
 
 ### Blackfire ########################################
